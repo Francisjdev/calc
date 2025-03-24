@@ -29,8 +29,8 @@ function displayContent(content){
     if(display.textContent ==='0' && content !== '.' || operators.includes(display.textContent) || display.textContent == result ){
         display.textContent = content 
         buffer = content
-        console.log('primer digito')
     } else if(!operators.includes(content)){
+        if(display.textContent.length < 12)
         display.textContent += content
         buffer = display.textContent  
     } else if (operators.includes(content)){
@@ -43,19 +43,28 @@ function displayContent(content){
             operator = content
             display.textContent = operator
         }else {
-            if(operator === '='){
+            if(content === '='){
                 console.log('apretaron igual')
                 n2 = buffer
                 result = calculate(operator, parseFloat(n1), parseFloat(n2))
-                return display.textContent = result
+                display.textContent = result
+                buffer = 0
+                n1 = 0
+                n2 = 0
+                operator = null
+                result == null
+                return 
+
+            }else{
+                n2 = buffer
+                result = calculate(operator, parseFloat(n1), parseFloat(n2))
+                n1 = result
+                console.log("este es el resultado que se guarda como n1 para siguiente calculo", n1)
+                operator = content
+                console.log('este es el nuevo operador', operator)
+                display.textContent = result
             }
-            n2 = buffer
-            result = calculate(operator, parseFloat(n1), parseFloat(n2))
-            n1 = result
-            console.log("este es el resultado que se guarda como n1 para siguiente calculo", n1)
-            operator = content
-            console.log('este es el nuevo operador', operator)
-            display.textContent = result
+          
         }
     }
 }   
@@ -69,6 +78,9 @@ function multiply(a, b){
     return a * b;
 }
 function divide(a, b ){
+    if (b == 0){
+        return "Cant divide by 0"
+    }
     return a / b;
 }
 
